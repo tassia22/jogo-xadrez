@@ -3,6 +3,10 @@ package Aplicacao;
 import Xadrez.Cor;
 import Xadrez.PartidaXadrez;
 import Xadrez.PecaXadrez;
+import Xadrez.XadrezPosicao;
+
+import java.util.InputMismatchException;
+import java.util.Scanner;
 
 public class UI {
 
@@ -27,6 +31,17 @@ public class UI {
     public static final String ANSI_CYAN_BACKGROUND = "\u001B[46m";
     public static final String ANSI_WHITE_BACKGROUND = "\u001B[47m";
 
+    public  static XadrezPosicao lerPosicaoXadrez(Scanner scan){
+        try {
+            String s = scan.nextLine();
+            char coluna = s.charAt(0);
+            int linha = integer.parseInt(s.substring(1));
+            return new XadrezPosicao(coluna, linha);
+        }
+        catch (RuntimeException x){
+            throw  new InputMismatchException("erros lendo posicao de xadrez. Valores validos sao da posicao a1 ate h8");
+        }
+    }
     public static void printTabuleiro(PecaXadrez[][] pecas) {
         for (int i = 0; i < pecas.length; i++) {
             System.out.print((8 - i)+" ");
