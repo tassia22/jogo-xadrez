@@ -28,4 +28,6 @@ public class Posicao {
     public void setColunas(int colunas) {
         this.coluna = coluna;
     }
+
+
 }
