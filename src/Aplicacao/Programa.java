@@ -28,11 +28,11 @@ public class Programa {
 
                 PecaXadrez capturaPeca = partidaXadrez.executarMovimentoXadrez(origem, destino);
             }
-            catch (XadrezException x){
+            catch (XadrezException e){
                 System.out.println(e.getMessage());
                 scan.nextLine();
             }
-            catch (InputMismatchException x){
+            catch (InputMismatchException e){
                 System.out.println(e.getMessage());
                 scan.nextLine();
             }
