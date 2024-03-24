@@ -12,7 +12,7 @@ public class PartidaXadrez {
         tabuleiro = new Tabuleiro(8,8);
         iniciaPartida();
     }
-    public PecaXadrez[][] getPecas(){
+    public static PecaXadrez[][] getPecas(){
         PecaXadrez[][] mat = new PecaXadrez[tabuleiro.getLinhas()][tabuleiro.getColunas()];
         for (int i = 0; i < tabuleiro.getLinhas(); i++){
             for (int j = 0; j < tabuleiro.getColunas(); j++){
@@ -21,6 +21,11 @@ public class PartidaXadrez {
             }
         }
         return mat;
+    }
+    public boolean[][] possivelMovimento(XadrezPosicao origemPosicao){
+        Posicao posicao = origemPosicao.toPosicao();
+        validaOrigemPosicao(posicao);
+        return tabuleiro.peca(posicao).possivelMovimento();
     }
     public PecaXadrez executarMovimentoXadrez(XadrezPosicao origemPosicao, XadrezPosicao destinoPosicao){
         Posicao origem = origemPosicao.toPosicao();
