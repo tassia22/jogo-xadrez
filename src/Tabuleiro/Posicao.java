@@ -20,8 +20,12 @@ public class Posicao {
     public void setLinha(int linha) {
         this.linha = linha;
     }
+    public void setValores(int linha, int coluna){
+        this.linha = linha;
+        this.coluna = coluna;
+    }
 
-    public int getColunas() {
+    public int getColuna() {
         return coluna;
     }
 
