@@ -1,5 +1,7 @@
 package Tabuleiro;
 
+import Xadrez.Cor;
+
 public abstract class Peca {
     protected Posicao posicao;
     private Tabuleiro tabuleiro;
@@ -30,5 +32,7 @@ public abstract class Peca {
         return false;
 
     }
+
+
 
 }

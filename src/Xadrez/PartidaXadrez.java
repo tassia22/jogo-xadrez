@@ -5,13 +5,27 @@ import PecasXadrez.Torre;
 import Tabuleiro.Tabuleiro;
 import Tabuleiro.Posicao;
 import Tabuleiro.Peca;
+import Xadrez.Cor;
 public class PartidaXadrez {
     private Tabuleiro tabuleiro;
+    private int vez;
+    private Cor jogadorAtual;
 
     public PartidaXadrez(){
         tabuleiro = new Tabuleiro(8,8);
+        vez = 1;
+        jogadorAtual = Cor.BRANCO;
         iniciaPartida();
     }
+
+    public int getVez() {
+        return vez;
+    }
+
+    public Cor getJogadorAtual() {
+        return jogadorAtual;
+    }
+
     public static PecaXadrez[][] getPecas(){
         PecaXadrez[][] mat = new PecaXadrez[tabuleiro.getLinhas()][tabuleiro.getColunas()];
         for (int i = 0; i < tabuleiro.getLinhas(); i++){
@@ -33,6 +47,7 @@ public class PartidaXadrez {
         validaOrigemPosicao(origem);
         validaAlvoPosicao(origem, destino);
         Peca capturaPeca = makeMove(origem, destino);
+        trocaVez();
         return (PecaXadrez) capturaPeca;
     }
     private Peca makeMove(Posicao origem, Posicao destino){
@@ -44,7 +59,9 @@ public class PartidaXadrez {
     public void  validaOrigemPosicao(Posicao posicao){
         if (!tabuleiro.existePosicao(posicao)){
             throw new XadrezException("nao existe peca na posicao de origem");
-
+        }
+        if (jogadorAtual != (PecaXadrez) tabuleiro.peca(posicao).getCor()){
+            throw  new XadrezException("a peça escolhida nao é sua");
         }
         if (!tabuleiro.peca(posicao).existePossivelMovimento()){
             throw  new XadrezException("nao existe movimentos possiveis para a peça escolhida");
@@ -54,6 +71,10 @@ public class PartidaXadrez {
         if (!tabuleiro.peca(origem).possivelMovimento(destino)){
             throw  new XadrezException("a peca escolhida nao pode se mover para a posicao de destino");
         }
+    }
+    private void trocaVez(){
+        vez++;
+        jogadorAtual = (jogadorAtual == Cor.BRANCO) ? Cor.PRETO: Cor.BRANCO;
     }
 
     private void lugarNovaPeca(char colunas, int linha, PecaXadrez peca){

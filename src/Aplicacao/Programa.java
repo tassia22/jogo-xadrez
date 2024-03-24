@@ -17,7 +17,7 @@ public class Programa {
             try {
                 UI.clearScreen();
                 //recebe a matriz de peças da minha partida
-                UI.printTabuleiro(partidaXadrez.getPecas());
+                UI.printMatch(partidaXadrez);
                 System.out.println();
                 System.out.print("origem: ");
                 XadrezPosicao origem = UI.lerPosicaoXadrez(scan);

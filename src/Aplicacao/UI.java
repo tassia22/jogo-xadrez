@@ -46,6 +46,13 @@ public class UI {
             throw  new InputMismatchException("erros lendo posicao de xadrez. Valores validos sao da posicao a1 ate h8");
         }
     }
+
+    public static void printMatch(PartidaXadrez partidaXadrez){
+        printTabuleiro(partidaXadrez.getPecas());
+        System.out.println();
+        System.out.println("turno: "+partidaXadrez.getVez());
+        System.out.println("esperando o jogador jogar: "+partidaXadrez.getJogadorAtual());
+    }
     public static void printTabuleiro(PecaXadrez[][] pecas) {
         for (int i = 0; i < pecas.length; i++) {
             System.out.print((8 - i)+" ");
