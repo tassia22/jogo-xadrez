@@ -1,5 +1,6 @@
 package Xadrez;
 
+import PecasXadrez.Peao;
 import PecasXadrez.Rei;
 import PecasXadrez.Torre;
 import Tabuleiro.Tabuleiro;
@@ -186,6 +187,10 @@ public class PartidaXadrez {
         lugarNovaPeca('e', 2, new Torre(tabuleiro, Cor.BRANCO));
         lugarNovaPeca('e', 1, new Torre(tabuleiro, Cor.BRANCO));
         lugarNovaPeca('d', 1, new Rei(tabuleiro, Cor.BRANCO));
+        lugarNovaPeca('a', 2, new Peao(tabuleiro, Cor.BRANCO));
+        lugarNovaPeca('b', 2, new Peao(tabuleiro, Cor.BRANCO));
+        lugarNovaPeca('e', 2, new Peao(tabuleiro, Cor.BRANCO));
+        lugarNovaPeca('f', 2, new Peao(tabuleiro, Cor.BRANCO));
 
         lugarNovaPeca('c', 7, new Torre(tabuleiro, Cor.PRETO));
         lugarNovaPeca('c', 8, new Torre(tabuleiro, Cor.PRETO));
@@ -193,5 +198,9 @@ public class PartidaXadrez {
         lugarNovaPeca('e', 7, new Torre(tabuleiro, Cor.PRETO));
         lugarNovaPeca('e', 8, new Torre(tabuleiro, Cor.PRETO));
         lugarNovaPeca('d', 8, new Torre(tabuleiro, Cor.PRETO));
+        lugarNovaPeca('a', 7, new Peao(tabuleiro, Cor.PRETO));
+        lugarNovaPeca('c', 7, new Torre(tabuleiro, Cor.PRETO));
+        lugarNovaPeca('d', 7, new Peao(tabuleiro, Cor.PRETO));
+        lugarNovaPeca('w', 7, new Torre(tabuleiro, Cor.PRETO));
     }
 }
