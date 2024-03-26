@@ -60,6 +60,6 @@ public class Peao extends PecaXadrez {
         return mat;
     }
     public String toString(){
-        return "p";
+        return "P";
     }
 }
