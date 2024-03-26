@@ -17,7 +17,7 @@ public class Programa {
         PartidaXadrez partidaXadrez = new PartidaXadrez();
         List<PecaXadrez> cap = new ArrayList<>();
 
-        while (true) {
+        while (!partidaXadrez.getCheckMate()) {
             try {
                 UI.clearScreen();
                 //recebe a matriz de peças da minha partida
@@ -48,6 +48,8 @@ public class Programa {
                 scan.nextLine();
             }
         }
+        UI.clearScreen();
+        UI.printMatch(partidaXadrez, cap);
 
     }
 }

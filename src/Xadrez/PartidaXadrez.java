@@ -16,6 +16,7 @@ public class PartidaXadrez {
     private int vez;
     private Cor jogadorAtual;
     private boolean check;
+    private boolean checkMate;
 
     private List<Peca> pecaDoTabuleiro = new ArrayList<>();
     private List<Peca> pecaCapturadas = new ArrayList<>();
@@ -38,6 +39,10 @@ public class PartidaXadrez {
    public boolean getCheck(){
         return check;
    }
+
+    public boolean getCheckMate() {
+        return checkMate;
+    }
 
     public static PecaXadrez[][] getPecas(){
         PecaXadrez[][] mat = new PecaXadrez[tabuleiro.getLinhas()][tabuleiro.getColunas()];
@@ -67,7 +72,11 @@ public class PartidaXadrez {
         }
         check = (testeCheck(oponente(jogadorAtual))) ? true: false;
 
-        trocaVez();
+        if (testeCheckMate(oponente(jogadorAtual))){
+            checkMate = true;
+        }else {
+            trocaVez();
+        }
         return (PecaXadrez) capturaPeca;
     }
     private Peca makeMove(Posicao origem, Posicao destino){
@@ -137,6 +146,33 @@ public class PartidaXadrez {
         }
         return false;
     }
+
+    private boolean testeCheckMate(Cor cor){
+        if (!testeCheck(cor)){
+            return false;
+
+        }
+        List<Peca> list = pecaDoTabuleiro.stream().filter(x ->((PecaXadrez)x).getCor() == cor).collect(Collectors.toList());
+        for (Peca p: list){
+            boolean[][] mat = p.possivelMovimento();
+            for (int i=0; i <tabuleiro.getLinhas(); i++){
+                for (int j=0; j < tabuleiro.getColunas(); j++){
+                    if(mat[i][j]){
+                        Posicao origem = (PecaXadrez)p.getXadrezPosicao().toPoisition();
+                        Posicao destino = new Posicao(i, j);
+                        Peca capturaPeca = makeMove(origem, destino);
+                        boolean testeCheck = testeCheck(cor);
+                        desfazerMove(origem, destino,capturaPeca);
+                        if (!testeCheck){
+                            return false;
+                        }
+                    }
+                }
+            }
+        }
+        return true;
+    }
+
 
     private void lugarNovaPeca(char colunas, int linha, PecaXadrez peca){
         tabuleiro.lugarPeca(peca, new XadrezPosicao(colunas, linha).toPosicao());

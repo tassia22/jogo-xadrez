@@ -56,10 +56,15 @@ public class UI {
         printCapturaPecas(cap);
         System.out.println();
         System.out.println("turno: "+partidaXadrez.getVez());
-        System.out.println("esperando o jogador jogar: "+partidaXadrez.getJogadorAtual());
 
-        if (PartidaXadrez.getCheck()){
-            System.out.println("check");
+        if (!partidaXadrez.getCheckMate()){
+            System.out.println("esperando o jogador jogar: "+partidaXadrez.getJogadorAtual());
+            if (PartidaXadrez.getCheck()){
+                System.out.println("check");
+        }else{
+                System.out.println("checkmate");
+                System.out.println("vencedor: "+partidaXadrez.getJogadorAtual());
+            }
         }
     }
     public static void printTabuleiro(PecaXadrez[][] pecas) {
