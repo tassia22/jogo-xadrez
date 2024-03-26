@@ -6,11 +6,9 @@ import Tabuleiro.Posicao;
 
 public abstract class PecaXadrez extends Peca {
     private  Cor cor;
+    private  int movieCount;
 
 
-    public void PecaXadrez() {
-
-    }
     public PecaXadrez(Tabuleiro tabuleiro, Cor cor){
         super(tabuleiro);
         this.cor = cor;
@@ -20,11 +18,23 @@ public abstract class PecaXadrez extends Peca {
         return p != null && p.getCor() != cor;
     }
 
+    public void incrementaMoveCount(){
+        movieCount++;
+    }
+    public void decrementaMoveCount(){
+        movieCount--;
+    }
+
     public Cor getCor() {
         return cor;
     }
 
+
     public XadrezPosicao getXadrezPosicao(){
         return  XadrezPosicao.fromPosicao(posicao);
+    }
+
+    public int getMovieCount() {
+        return movieCount;
     }
 }
