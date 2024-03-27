@@ -5,7 +5,7 @@ import Xadrez.Cor;
 import Xadrez.PecaXadrez;
 import Tabuleiro.Posicao;
 
-public  abstract class Torre extends PecaXadrez {
+public class Torre extends PecaXadrez {
 
     public Torre(Tabuleiro tabuleiro, Cor cor) {
         super(tabuleiro, cor);
