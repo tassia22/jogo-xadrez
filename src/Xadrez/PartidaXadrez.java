@@ -220,7 +220,8 @@ public class PartidaXadrez {
 
             }
         }
-        public void validaOrigemPosicao (Posicao posicao){
+    }
+        public void validaOrigemPosicao(Posicao posicao){
 
             if (!tabuleiro.existePosicao(posicao)) {
                 throw new XadrezException("nao existe peca na posicao de origem");
@@ -232,6 +233,7 @@ public class PartidaXadrez {
                 throw new XadrezException("nao existe movimentos possiveis para a peça escolhida");
             }
         }
+
         private void validaAlvoPosicao (Posicao origem, Posicao destino){
             if (!tabuleiro.peca(origem).possivelMovimento(destino)) {
                 throw new XadrezException("a peca escolhida nao pode se mover para a posicao de destino");
@@ -294,7 +296,7 @@ public class PartidaXadrez {
         }
 
 
-        private void lugarNovaPeca ( char colunas, int linha, PecaXadrez peca){
+        private void lugarNovaPeca ( char colunas, int linha, Peca peca){
             tabuleiro.lugarPeca(peca, new XadrezPosicao(colunas, linha).toPosicao());
             pecaDoTabuleiro.add(peca);
         }
@@ -332,4 +334,3 @@ public class PartidaXadrez {
             lugarNovaPeca('w', 7, new Torre(tabuleiro, Cor.PRETO));
         }
     }
-}
