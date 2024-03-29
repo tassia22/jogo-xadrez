@@ -5,6 +5,7 @@ import Tabuleiro.Tabuleiro;
 import Tabuleiro.Posicao;
 import Tabuleiro.Peca;
 
+import java.security.spec.InvalidParameterSpecException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -16,6 +17,7 @@ public class PartidaXadrez {
     private boolean check;
     private boolean checkMate;
     private PecaXadrez enPassanteVulneravel;
+    private  PecaXadrez promovida;
 
     private List<Peca> pecaDoTabuleiro = new ArrayList<>();
     private List<Peca> pecaCapturadas = new ArrayList<>();
@@ -41,6 +43,10 @@ public class PartidaXadrez {
 
     public boolean getCheckMate() {
         return checkMate;
+    }
+
+    public PecaXadrez getPromovida() {
+        return promovida;
     }
 
     public PecaXadrez getEnPassanteVulneravel() {
@@ -77,6 +83,14 @@ public class PartidaXadrez {
         }
         PecaXadrez movedPeca = (PecaXadrez) tabuleiro.peca(destino);
 
+        promovida = null;
+        if (movedPeca instanceof Peao){
+            if (movedPeca.getCor() == Cor.BRANCO && destino.getLinha() == 0 || movedPeca.getCor() == Cor.PRETO && destino.getLinha() == 0){
+                promovida = (PecaXadrez) tabuleiro.peca(destino);
+                promovida = substituiPecaPromovida("Q");
+            }
+        }
+
         check = (testeCheck(oponente(jogadorAtual))) ? true : false;
 
         if (testeCheckMate(oponente(jogadorAtual))) {
@@ -94,6 +108,33 @@ public class PartidaXadrez {
         return (PecaXadrez) capturaPeca;
     }
 
+    public  PecaXadrez substituiPecaPromovida(String tipo){
+        if (promovida == null){
+            throw  new IllegalStateException("não ha peça para ser promovida");
+        }
+        if (tipo.equals("B") && tipo.equals("C" ) && tipo.equals("T") && !tipo.equals("Q")){
+            throw  new InvalidParameterSpecException("tipo promovida invalido");
+        }
+        Posicao pos = promovida.getXadrezPosicao().toPosicao();
+        Peca p = tabuleiro.removePeca(pos);
+        pecaDoTabuleiro.remove(p);
+
+        PecaXadrez novaPeca = novaPeca(tipo, promovida.getCor());
+        tabuleiro.lugarPeca(novaPeca,pos);
+        pecaDoTabuleiro.add(novaPeca);
+
+        return novaPeca;
+
+
+    }
+
+    private PecaXadrez novaPeca(String tipo, Cor cor){
+        if (tipo.equals("B")) return  new Bispo(tabuleiro, cor);
+        if (tipo.equals("C")) return  new Cavalo(tabuleiro, cor);
+        if (tipo.equals("Q")) return  new Rainha(tabuleiro, cor);
+        return  new Torre(tabuleiro, cor);
+
+    }
     private Peca makeMove(Posicao origem, Posicao destino) {
         PecaXadrez p = (PecaXadrez) tabuleiro.removePeca(origem);
         p.incrementaMoveCount();
@@ -106,14 +147,14 @@ public class PartidaXadrez {
         }
         if (p instanceof Rei && destino.getColuna() == origem.getColuna() + 2) {
             Posicao origemT = new Posicao(origem.getLinha(), origem.getColuna() + 3);
-            Posicao destinoT = new Posicao(origem.getLinha(), origem.getColuna() + 1)
+            Posicao destinoT = new Posicao(origem.getLinha(), origem.getColuna() + 1);
             PartidaXadrez Roque = (PartidaXadrez) tabuleiro.removePeca(destinoT);
             tabuleiro.lugarPeca(Roque, origemT);
             Roque.incrementataMoveCount();
         }
         if (p instanceof Rei && destino.getColuna() == origem.getColuna() - 2) {
             Posicao origemT = new Posicao(origem.getLinha(), origem.getColuna() - 4);
-            Posicao destinoT = new Posicao(origem.getLinha(), origem.getColuna() - 1)
+            Posicao destinoT = new Posicao(origem.getLinha(), origem.getColuna() - 1);
             PartidaXadrez Roque = (PartidaXadrez) tabuleiro.removePeca(destinoT);
             tabuleiro.lugarPeca(Roque, origemT);
             Roque.incrementataMoveCount();
@@ -151,14 +192,14 @@ public class PartidaXadrez {
 
         if (p instanceof Rei && destino.getColuna() == origem.getColuna() + 2) {
             Posicao origemT = new Posicao(origem.getLinha(), origem.getColuna() + 3);
-            Posicao destinoT = new Posicao(origem.getLinha(), origem.getColuna() + 1)
+            Posicao destinoT = new Posicao(origem.getLinha(), origem.getColuna() + 1);
             PartidaXadrez Roque = (PartidaXadrez) tabuleiro.removePeca(origemT);
             tabuleiro.lugarPeca(Roque, destinoT);
             Roque.incrementaMoveCount();
         }
         if (p instanceof Rei && destino.getColuna() == origem.getColuna() - 2) {
             Posicao origemT = new Posicao(origem.getLinha(), origem.getColuna() - 4);
-            Posicao destinoT = new Posicao(origem.getLinha(), origem.getColuna() - 1)
+            Posicao destinoT = new Posicao(origem.getLinha(), origem.getColuna() - 1);
             PartidaXadrez Roque = (PartidaXadrez) tabuleiro.removePeca(origemT);
             tabuleiro.lugarPeca(Roque, destinoT);
             Roque.incrementaMoveCount();
